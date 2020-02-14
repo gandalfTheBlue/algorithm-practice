@@ -10,7 +10,7 @@
 
 function isContain(a, b) {
   if (typeof a !== "string" || typeof b !== "string") {
-    throw new Error("Please pass strings as arguments.");
+    return -1;
   }
 
   for (let i = 0; i < b.length; i++) {
@@ -28,3 +28,5 @@ function isContain(a, b) {
 
   return -1;
 }
+
+module.exports = isContain;
