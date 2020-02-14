@@ -1,26 +1,41 @@
 //https://zhuanlan.zhihu.com/p/58428287
 
+//完整的实现
 class Promise {
   constructor(fn) {
-    this.state = "pending";
-    this.value = null;
     this.callbacks = [];
+    this.state = "pending"; //增加状态
+    this.value = null; //保存结果
     fn(this._resolve.bind(this));
   }
 
   then(onFulfilled) {
+    return new Promise(resolve => {
+      this._handle({
+        onFulfilled: onFulfilled || null,
+        resolve: resolve
+      });
+    });
+  }
+
+  _handle(callback) {
     if (this.state === "pending") {
-      this.callbacks.push(onFulfilled);
-    } else {
-      onFulfilled(this.value);
+      this.callbacks.push(callback);
+      return;
     }
-    return this;
+    //如果then中没有传递任何东西
+    if (!callback.onFulfilled) {
+      callback.resolve(this.value);
+      return;
+    }
+    var ret = callback.onFulfilled(this.value);
+    callback.resolve(ret);
   }
 
   _resolve(value) {
-    this.state = "resolved";
-    this.value = value;
-    this.callbacks.forEach(callback => callback(value));
+    this.state = "fulfilled"; //改变状态
+    this.value = value; //保存结果
+    this.callbacks.forEach(callback => this._handle(callback));
   }
 }
 
@@ -28,10 +43,4 @@ let promise = new Promise(resolve => {
   resolve("同步执行");
 });
 
-promise.then(value => console.log(value)).then(value => console.log(value));
-
-setTimeout(() => {
-  promise.then(tip => {
-    console.log("then3", tip);
-  });
-});
+promise.then(value => console.log(value));
