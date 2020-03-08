@@ -4,6 +4,8 @@
  */
 // cbbd
 var longestPalindrome = function(s) {
+  if (!s || s === '') return s
+
   let map = new Map()
   s.split('').forEach((char, index) => (map[index] = char))
   for (let maxLen = s.length; maxLen > 0; maxLen--) {
@@ -11,7 +13,7 @@ var longestPalindrome = function(s) {
       let isMaxLen = true
       let start = j
       let end = maxLen + j - 1
-      for (; start < Math.floor(maxLen / 2) + j; ) {
+      while (start < end) {
         if (map[start] !== map[end]) {
           isMaxLen = false
           break
@@ -20,8 +22,7 @@ var longestPalindrome = function(s) {
         end--
       }
       if (isMaxLen) {
-        const result = s.substring(j, maxLen + j)
-        return result
+        return s.substring(j, maxLen + j)
       }
     }
   }
