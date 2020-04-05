@@ -38,19 +38,16 @@
 
 var convert = function(s, numRows) {
   if (numRows <= 1) return s
-  let temp = []
+  const rows = new Array(numRows).fill('')
 
   const iterateNum = 2 * numRows - 2
   for (let k = 0; k < s.length; k++) {
     const remainder = k % iterateNum
-    let tempIndex = remainder < numRows ? remainder : iterateNum - remainder
-    if (!temp[tempIndex]) {
-      temp[tempIndex] = ''
-    }
-    temp[tempIndex] += s.charAt(k)
+    const tempIndex = remainder < numRows ? remainder : iterateNum - remainder
+    rows[tempIndex] += s.charAt(k)
   }
 
-  return temp.join('')
+  return rows.join('')
 }
 
 module.exports = convert
