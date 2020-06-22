@@ -1,5 +1,14 @@
 {
   "devDependencies": {
     "jest": "^25.1.0"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "useTabs": true,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "jsxBracketSameLine": true,
+    "proseWrap": "never"
   }
 }
