@@ -1,3 +1,5 @@
+//https://zhuanlan.zhihu.com/p/58428287
+
 function Promise(fn) {
 	var state = 'pending',
 		value = null,
